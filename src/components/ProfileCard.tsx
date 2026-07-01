@@ -25,8 +25,12 @@ export function ProfileCard({
 
   const handleClick = () => {
     if (onProfileClick) onProfileClick(profile.username);
-    navigate(`/profile/${profile.username}?platform=${platform}`);
+
+    const profileHandle = profile.username ?? profile.handle;
+    navigate(`/profile/${profileHandle}?platform=${platform}`);
   };
+
+  const displayUsername = profile.username ?? profile.handle ?? "unknown";
 
   return (
     <div
@@ -37,7 +41,7 @@ export function ProfileCard({
       <img src={profile.picture} className="w-12 h-12 rounded-full" />
       <div className="text-left flex-1">
         <div className="font-bold">
-          @{profile.username}
+          @{displayUsername}
           <VerifiedBadge verified={profile.is_verified} />
         </div>
         <div className="text-sm text-gray-600">{profile.fullname}</div>

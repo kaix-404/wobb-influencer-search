@@ -5,7 +5,7 @@ const profileModules = import.meta.glob<ProfileDetailResponse>(
 );
 
 export async function loadProfileByUsername(
-  username: string
+  username?: string
 ): Promise<ProfileDetailResponse | null> {
   const path = `../assets/data/profiles/${username}.json`;
   const loader = profileModules[path];
