@@ -16,7 +16,7 @@ export function SearchPage() {
 
   const handleProfileClick = (username: string) => {
     setClickCount((prev) => prev + 1);
-    console.log("Clicked profile:", username);
+    console.log("Clicked profile:", username, clickCount + 1);
   };
 
   return (
