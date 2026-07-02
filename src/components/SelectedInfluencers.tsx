@@ -1,7 +1,6 @@
 import { useInfluencerStore } from "@/store/influencerStore";
 import { formatFollowers } from "@/utils/formatters";
-import { FaTrash } from "react-icons/fa";
-import toast from "react-hot-toast";
+import { FaInstagram, FaYoutube, FaTiktok, FaTrash } from "react-icons/fa";
 
 export function SelectedInfluencers() {
   const selectedProfiles = useInfluencerStore(
@@ -16,9 +15,15 @@ export function SelectedInfluencers() {
     (state) => state.clearProfiles
   );
 
+  const icons = {
+    instagram: <FaInstagram className="text-pink-500" />,
+    youtube: <FaYoutube className="text-red-500" />,
+    tiktok: <FaTiktok className="text-black" />,
+  };
+
   if (selectedProfiles.length === 0) {
     return (
-      <div className="border p-5 shadow-sm">
+      <div className="rounded-xl border p-5 shadow-sm">
         <h2 className="mb-4 text-lg font-semibold">
           Selected Influencers
         </h2>
@@ -31,60 +36,77 @@ export function SelectedInfluencers() {
   }
 
   return (
-    <div className="border p-5 shadow-sm sticky top-5">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">
-          Selected ({selectedProfiles.length})
-        </h2>
+    <aside className="sticky top-24 h-fit w-80 rounded-2xl border border-gray-200 p-5 shadow-sm">
+      <div className="mb-5 flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-semibold">
+            Selected Influencers
+          </h2>
 
-        <button
-          onClick={() => {
-            clearProfiles();
-            toast.success("List cleared");
-          }}
-          className="text-sm text-red-600 hover:underline"
-        >
-          Clear All
-        </button>
+          <p className="text-sm text-gray-500">
+            {selectedProfiles.length} selected
+          </p>
+        </div>
       </div>
 
+      {selectedProfiles.length === 0 && (
+        <div className="rounded-xl border border-dashed border-gray-300 py-10 text-center text-sm text-gray-400">
+          No influencers selected.
+        </div>
+      )}
+
       <div className="space-y-3">
-        {selectedProfiles.map(({ profile, platform }) => (
+        {selectedProfiles.map((item) => (
           <div
-            key={profile.user_id}
-            className="flex items-center gap-3 rounded-lg border p-2"
+            key={`${item.platform}-${item.profile.user_id}`}
+            className="flex items-center justify-between rounded-xl border border-gray-100 p-3 hover:bg-gray-50"
           >
-            <img
-              src={profile.picture}
-              alt={profile.fullname ?? "Profile"}
-              className="h-10 w-10 rounded-full"
-            />
+            <div className="flex items-center gap-3">
+              <img
+                src={item.profile.picture}
+                alt={item.profile.fullname}
+                className="h-12 w-12 rounded-full object-cover"
+              />
 
-            <div className="flex-1">
-              <p className="font-medium">
-                {profile.fullname}
-              </p>
-
-              <p className="text-xs text-gray-500">
-                {platform}
-              </p>
-
-              <p className="text-xs">
-                {formatFollowers(profile.followers)} followers
-              </p>
+              <div>
+                <div className="flex items-center gap-2">
+                  {icons[item.platform]}
+                  <span className="font-medium">
+                    {item.profile.fullname}
+                  </span>
+                </div>
+  
+                <p className="text-xs text-gray-500">
+                  @{item.profile.username}
+                </p>
+  
+                <p className="text-xs text-gray-400">
+                  {formatFollowers(item.profile.followers)} followers
+                </p>
+              </div>
             </div>
 
             <button
-              onClick={() => {
-                removeProfile(profile.user_id);
-                toast.success("Removed");
-              }}
+              onClick={() => removeProfile(item.profile.user_id)}
+              className="rounded-lg p-2 text-red-500 transition hover:bg-red-50"
             >
-              <FaTrash className="text-red-500" />
+              <FaTrash />
             </button>
           </div>
         ))}
       </div>
-    </div>
+
+      {selectedProfiles.length > 0 && (
+        <>
+          <div className="my-5 border-t" />
+            <button
+              onClick={clearProfiles}
+              className="w-full rounded-xl bg-red-500 py-3 font-medium text-white transition hover:bg-red-600"
+            >
+              Clear All
+            </button>
+        </>
+      )}
+    </aside>
   );
 }
