@@ -16,7 +16,17 @@ export function ProfileList({
 }: ProfileListProps) {
   return (
     <div className="flex flex-col items-center">
-      {profiles.length === 0 && <p>No profiles found</p>}
+      {profiles.length === 0 && 
+        <div className="text-center py-10">
+          <p className="text-lg font-medium">
+            No profiles found
+          </p>
+
+          <p className="text-gray-500">
+            Try another search term.
+          </p>
+        </div>
+      }
       {profiles.map((profile) => (
         <ProfileCard
           key={profile.user_id}
