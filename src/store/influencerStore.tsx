@@ -17,6 +17,8 @@ interface InfluencerStore {
   isSelected: (userId: string) => boolean;
 
   clearProfiles: () => void;
+
+  reorderProfiles: (startIndex: number, endIndex: number) => void;
 }
 
 export const useInfluencerStore = create<InfluencerStore>()(
@@ -54,6 +56,30 @@ export const useInfluencerStore = create<InfluencerStore>()(
       clearProfiles: () =>
         set({
           selectedProfiles: [],
+        }),
+
+      reorderProfiles: (startIndex, endIndex) =>
+        set((state) => {
+          const items = [...state.selectedProfiles];
+
+          if (
+            startIndex < 0 ||
+            endIndex < 0 ||
+            startIndex >= items.length ||
+            endIndex >= items.length
+          ) {
+            return state;
+          }
+
+          const [removed] = items.splice(startIndex, 1);
+
+          if (!removed) return state;
+
+          items.splice(endIndex, 0, removed);
+
+          return {
+            selectedProfiles: items,
+          };
         }),
     }),
     {
