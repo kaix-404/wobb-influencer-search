@@ -1,80 +1,141 @@
-# Wobb Frontend Assignment
+# Influencer Search Dashboard
 
-A starter influencer search application built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**. This project is intentionally left in a rough-but-working state for candidates to improve.
+A modern React + TypeScript application for searching and exploring influencer profiles across multiple social media platforms. Users can browse creators, view detailed analytics, and build a persistent shortlist of influencers for comparison.
 
-## Getting Started
+---
+
+## Tech Stack
+
+* React 19
+* TypeScript
+* Vite
+* React Router
+* Tailwind CSS
+* Zustand (Persistent State Management)
+* React Icons
+* React Hot Toast
+
+---
+
+## Features
+
+### Search & Filtering
+
+* Search influencers by username or display name.
+* Filter creators across:
+
+  * Instagram
+  * YouTube
+  * TikTok
+* Real-time search filtering.
+* Dynamic result count.
+
+### Profile Details
+
+* Dedicated profile page.
+* Detailed influencer statistics including:
+
+  * Followers
+  * Engagement Rate
+  * Average Views
+  * Average Likes
+  * Average Comments
+  * Posts (when available)
+* Verified account indicator.
+* Direct link to the creator's social profile.
+
+### Influencer Shortlist
+
+* Add influencers to a personal selection list.
+* Remove individual influencers.
+* Clear the complete selection.
+* Duplicate prevention.
+* Persistent storage using Zustand (saved across browser refreshes).
+
+### User Experience
+
+* Responsive layout.
+* Sticky navigation header.
+* Platform-specific icons.
+* Toast notifications.
+* Clean and modern UI built with Tailwind CSS.
+
+---
+
+## Project Structure
+
+```text
+src/
+├── assets/
+│   └── data/
+├── components/
+├── pages/
+├── store/
+├── types/
+├── utils/
+└── main.tsx
+```
+
+---
+
+## Installation
+
+Clone the repository:
 
 ```bash
-npm install
+git clone <repository-url>
+```
+
+Install dependencies:
+
+```bash
+npm install --legacy-peer-deps
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) to view the app.
+Create a production build:
 
-## What's Included
+```bash
+npm run build
+```
 
-- **Search / Dashboard** — filter influencers by platform (Instagram, YouTube, TikTok) and search by username or full name
-- **Profile Details** — click a profile to view extended data loaded from individual JSON files
-- **Routing** — `react-router-dom` with `/` (search) and `/profile/:username` (details)
+---
 
-Sample data lives in:
+## State Management
 
-- `src/assets/data/search/` — platform search results (10 profiles each)
-- `src/assets/data/profiles/` — detailed profile JSON per username
+The application uses Zustand with persistence middleware for:
 
-## How to Submit
+* Selected influencer list
+* Duplicate prevention
+* Persistent browser storage
 
-1. **Download or clone** this starter project to your machine.
-2. **Create a new repository** on your own GitHub account. Do not fork the original assignment repo — push your work to a repo you own.
-3. Complete the tasks below and push your changes to that repository.
-4. **Share the public GitHub repository URL** with us as your submission.
+---
 
-### Deadline (strict)
+## Future Improvements
 
-- **Due:** **2 July 2026, 2:00 PM IST** (Indian Standard Time, UTC+5:30)
-- **Any git commits made after this deadline will disqualify your submission.** We will only consider the repository state as of the deadline; late commits will not be reviewed.
-- Make sure your final work is pushed **before** the cutoff.
+* Drag-and-drop reordering of selected influencers
+* Sorting by followers or engagement
+* Dark mode
+* Pagination / virtual scrolling
+* Advanced filtering options
+* Export selected influencers
+* Backend API integration
 
-## AI Usage
+---
 
-You may use any AI tools (Cursor, ChatGPT, Claude, GitHub Copilot, etc.). We are evaluating your final solution and engineering decisions.
+## Notes
 
-## Your Tasks
+This project was developed using React 19.
 
-Complete the following as part of your submission:
+Persistent influencer selection is fully implemented using Zustand. Drag-and-drop reordering was explored using `@hello-pangea/dnd`; however, compatibility issues with the current React 19 environment prevented a stable implementation within the assignment timeframe. The remainder of the application, including search, filtering, routing, persistent state management, and profile exploration, is fully functional.
 
-1. **Find and fix all bugs and quality issues** — the codebase contains intentional bugs and quality issues. Identify and resolve them.
+---
 
-2. **Completely redesign the UI/UX** — replace the basic layout with a polished, modern interface. Focus on usability, visual hierarchy, and delight.
+## Author
 
-3. **Replace React Context with Zustand** — when you implement state management for the selected list, use [Zustand](https://github.com/pmndrs/zustand) instead of React Context.
-
-4. **Implement "Select profile & Add to List"** — the disabled "Add to List" button is a stub. Build the full feature:
-   - Select / add profiles to a persistent list
-   - View and manage the selected list
-   - Handle duplicates appropriately
-
-5. **Improve code quality and project structure** — refactor as needed, add proper types, and follow React best practices.
-
-6. **Optimize performance** — apply sensible optimizations where appropriate.
-
-7. **Use any libraries you need** — you are not limited to the current stack. Choose tools that help you deliver a great result (UI kits, state managers, testing libraries, etc.).
-
-## Scripts
-
-| Command        | Description              |
-| -------------- | ------------------------ |
-| `npm run dev`  | Start development server |
-| `npm run build`| Production build         |
-| `npm run lint` | Run ESLint               |
-
-## Submission Notes
-
-- Document any assumptions or trade-offs in your README
-- Ensure `npm run build` passes before submitting
-- Focus on demonstrating your judgment — not every possible feature needs to be built, but the core assignment items should be addressed thoughtfully
-- Double-check that your repo is public (or that we have access) and that the link is included in your submission
-- Please make meaningful commits throughout your work. We may review your commit history.
-- **Bonus:** Deploying the app (e.g. Vercel, Netlify, GitHub Pages) is optional but will be considered a plus — include the live URL in your submission if you do
-
-Good luck!
+Kai
