@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import type { Platform, UserProfileSummary } from "@/types";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { formatFollowers } from "@/utils/formatters";
+import { useInfluencerStore } from "@/store/influencerStore";
+import toast from "react-hot-toast";
 
 interface ProfileCardProps {
   profile: UserProfileSummary;
@@ -17,6 +19,12 @@ export function ProfileCard({
   onProfileClick,
 }: ProfileCardProps) {
   const navigate = useNavigate();
+
+  const addProfile = useInfluencerStore((state) => state.addProfile);
+
+  const isSelected = useInfluencerStore((state) =>
+    state.isSelected(profile.user_id)
+  );
 
   const handleClick = () => {
     if (onProfileClick) onProfileClick(profile.username);
@@ -49,11 +57,25 @@ export function ProfileCard({
       {/* TODO: candidates must implement Add to List feature */}
       {/* TODO: candidates must implement Add to List feature */}
       <button
-        disabled
-        className="px-3 py-1 bg-gray-300 text-gray-500 text-sm rounded cursor-not-allowed"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation();
+
+          if (isSelected) {
+            toast("Already added!");
+            return;
+          }
+
+          addProfile(platform, profile);
+          toast.success("Added to list!");
+        }}
+        disabled={isSelected}
+        className={`px-3 py-1 rounded text-sm transition ${
+          isSelected
+            ? "bg-green-600 text-white cursor-default"
+            : "bg-blue-600 text-white hover:bg-blue-700"
+        }`}
       >
-        Add to List
+        {isSelected ? "Added" : "Add to List"}
       </button>
     </div>
   );
